@@ -4,9 +4,9 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
 const login: NextPage = () => {
-  const CLIENT_ID = "";
-  const REDIRECT_URI =  "http://localhost:3000/kakaooauth";
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const CLIENT_ID = process.env.KAKAO_REST_API_KEY;
+  const REDIRECT_URI =  process.env.KAKAO_REDIRECT_URI;
+  const KAKAO_AUTH_URL = `${process.env.KAKAO_AUTH_URL}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   return (
     <div className={styles.container}>
       <Head>

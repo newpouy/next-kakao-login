@@ -9,10 +9,10 @@ const Kakaooauth: NextPage = () => {
   useEffect(()=> {
     let params = new URL(document.location.toString()).searchParams;
     let code = params.get("code"); // 인가코드 받는 부분
-    let grant_type = "authorization_code";
-    let client_id = "";
-    let redirect_uri = "http://localhost:3000/kakaooauth"
-    axios.post(`https://kauth.kakao.com/oauth/token?grant_type=${grant_type}&client_id=${client_id}&redirect_uri=${redirect_uri}&code=${code}`, {
+    const CLIENT_ID = process.env.KAKAO_REST_API_KEY;
+    const REDIRECT_URI =  process.env.KAKAO_REDIRECT_URI;
+    const KAKAO_GRANT_TYPE = process.env.KAKAO_GRANT_TYPE;
+    axios.post(`https://kauth.kakao.com/oauth/token?grant_type=${KAKAO_GRANT_TYPE}&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&code=${code}`, {
       headers: {
         'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
       }

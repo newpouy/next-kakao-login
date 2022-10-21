@@ -10,10 +10,6 @@ import qs from "qs";
 
 // 카카오 인증 후 카카오rest api /me 를 호출하여 사용자 정보를 가져옴
 const Kakaooauth2: NextPage = () => {
-  const REST_API_KEY = "";
-  const REDIRECT_URI = "http://localhost:3000/kakaooauth2";
-  const CLIENT_SECRET = ""
-  
   const router = useRouter()
   const getProfile = async () => {
     try {
@@ -28,27 +24,28 @@ const Kakaooauth2: NextPage = () => {
     }
   };
   const getToken = async (code) => {
+    const CLIENT_ID = process.env.KAKAO_REST_API_KEY;
+    const REDIRECT_URI_2 =  process.env.KAKAO_REDIRECT_URI_2;
+    const CLIENT_SECRET = process.env.KAKAO_CLIENT_SECRET
+    const KAKAO_TOKEN_URL = process.env.KAKAO_TOKEN_URL
+    const KAKAO_GRANT_TYPE = process.env.KAKAO_GRANT_TYPE;
     const payload = qs.stringify({
-      grant_type: "authorization_code",
-      client_id: REST_API_KEY,
-      redirect_uri: REDIRECT_URI,
+      grant_type: KAKAO_GRANT_TYPE,
+      client_id: CLIENT_ID,
+      redirect_uri: REDIRECT_URI_2,
       code: code,
       client_secret: CLIENT_SECRET,
     });
     try {
       // access token 가져오기
-      const res = await axios.post(
-        "https://kauth.kakao.com/oauth/token",
-        payload
-      );
-      
+      const res = await axios.post(KAKAO_TOKEN_URL, payload);
       // Kakao Javascript SDK 초기화
-      if(window) window.Kakao.init(REST_API_KEY);
+      if(window) window.Kakao.init(CLIENT_ID);
       // access token 설정
       if(window) window.Kakao.Auth.setAccessToken(res.data.access_token);
-      console.log(res)
+      // console.log(res)
       getProfile()
-      // router.push("/profile");
+      router.push("/profile");
     } catch (err) {
       console.log(err);
     }
@@ -69,7 +66,7 @@ const Kakaooauth2: NextPage = () => {
       <main className={styles.main}>
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>kakaooauth &rarr;</h2>
+            <h2>kakaooauth2 &rarr;</h2>
             <p>Find in-depth information about Next.js features and API.</p>
           </a>
         </div>
