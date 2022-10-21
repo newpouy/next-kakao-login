@@ -23,7 +23,7 @@ const Kakaooauth2: NextPage = () => {
       console.log(err);
     }
   };
-  const getToken = async (code) => {
+  const getToken = async (code: string | null) => {
     const CLIENT_ID = process.env.KAKAO_REST_API_KEY;
     const REDIRECT_URI_2 =  process.env.KAKAO_REDIRECT_URI_2;
     const CLIENT_SECRET = process.env.KAKAO_CLIENT_SECRET
